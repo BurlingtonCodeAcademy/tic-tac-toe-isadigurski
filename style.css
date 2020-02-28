@@ -10,7 +10,7 @@ body {
   h2 {
     font-size: 30px;
     text-align: center;
-    height: 75px;
+    height: 20px;
   }
   
   span{
@@ -55,11 +55,8 @@ body {
     margin: 0 auto;
   }
 
-  button {
-    background-color: green;
-    border: 4px solid blue;
-    color: white;
-    padding: 15px 32px;
-    font-size: 20px;
-    border-radius: 50%;
+  .border {
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+    
   }
