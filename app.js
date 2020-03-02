@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 5000
 
 app.use(express.static('/public'))
 
-app.get('/index.html', (request, response) => {
+app.get('/', (request, response) => {
     response.sendFile(path.resolve('./public/index.html'))
 })
 
