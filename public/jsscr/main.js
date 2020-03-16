@@ -15,28 +15,69 @@ let cells = [c0, c1, c2, c3, c4, c5, c6, c7, c8]
 //Winning Arrays
 let winningconditons = [[c0, c1, c2], [c3, c4, c5], [c6, c7, c8], [c0, c3, c6], [c1, c4, c7], [c2, c5, c8], [c0, c4, c8], [c2, c4, c6]]
 //Players and Status
-let playerX = 'X'
-let playerO = 'O'
+let playerX = '<img src="./jsscr/X.png" height="120" width="120" id="x">'
+let playerO = '<img src="./jsscr/O.png" height="130" width="130" id="o">'
 currentPlayer = playerX
 let message = document.getElementById('status')
-//--------------------------------------------------------------------------------------
+//Adds name to status section for Player 1
+let item = document.getElementById('player1name')
+let addButton = document.getElementById('start1')
+let itemList = document.getElementById('status')
+//-------------------------------------------------------------
 //Start Game 1 Player
 let startButton = document.getElementById("start1")
-startButton.addEventListener('click', activateSquare)
+startButton.addEventListener('click', () => {
+    activateSquare()
+    AI()
+    startTimer()
+})
 
 function activateSquare() {
     c0.addEventListener('click', event), c1.addEventListener('click', event), c2.addEventListener('click', event), c3.addEventListener('click', event), c4.addEventListener('click', event), c5.addEventListener('click', event), c6.addEventListener('click', event), c7.addEventListener('click', event), c8.addEventListener('click', event)
     message.innerHTML = 'Current Player X'
 }
+
 //Start Game 2 Player
 let startButton2 = document.getElementById("start2")
-startButton2.addEventListener('click', activateSquare2)
+startButton2.addEventListener('click', () => {
+    activateSquare2()
+    startTimer()
+})
 
 function activateSquare2() {
     c0.addEventListener('click', event), c1.addEventListener('click', event), c2.addEventListener('click', event), c3.addEventListener('click', event), c4.addEventListener('click', event), c5.addEventListener('click', event), c6.addEventListener('click', event), c7.addEventListener('click', event), c8.addEventListener('click', event)
     message.innerHTML = 'Current Player X'
 }
-//Switches between X and O and draws the player symbol, and blocks square in 1 Player mode and 2 Player mode
+
+//Human vs Computer
+
+function AI() {
+
+//Guess a random square
+    function randomInt(min, max) {
+        let range = max - min + 1
+        return min + Math.floor(Math.random() * range)
+    }
+
+//
+    let aiSquare = randomInt(cells)
+    console.log(aiSquare)
+    console.log(cellArray[aiSquare])
+
+    if (cellArray[aiSquare].textContent === "") {
+        cellArray[aiSquare].textContent = '0'
+        status.textContent = "Human's Turn"
+        winningLine()
+
+        if (winningLine() === 'true') {
+            status.textContent = "Computer Wins"
+        }
+    } else {
+        AI()
+    }
+}
+
+//Switches between X and O and draws the player symbol, and blocks square in 2 Player mode
 function event(event) {
 
     if (event.target.innerHTML) {
@@ -50,7 +91,7 @@ function event(event) {
             winningLine()
         } else {
             currentPlayer = playerX
-            message.innerHTML = 'Current Player X'
+            item.innerHTML = 'Current Player X'
             winningLine()
         }
     }
@@ -92,17 +133,38 @@ function deactivateSquares() {
 }
 
 //Add players names when selecting 2 player or 1 player (x)
-//Add a timer
-//Finish 1 player mode (need to build an AI)
 
+addButton.addEventListener('click' , function() {
+    let newName = document.createElement("ol")
+    let itemText = document.createTextNode(item.value)
 
-//Discovers a draw
-function draw() {
-    boardfull = cells.filter(function (cell) {
-        return cell.innerHTML !== ""
-    })
-    if (boardfull.length === 9  && !winner) {
-        message.innerHTML = "draw"
-        clearBoard()
+    newName.appendChild(itemText)
+
+    itemList.appendChild(newName)
+    item.value = ""
+})
+
+//Timer
+
+function startTimer() {
+
+    let sec = 0
+
+    timer = setInterval(function () {
+        sec += 1
+        document.getElementById("seconds").innerHTML = (sec % 60);
+        document.getElementById("minutes").innerHTML = parseInt(sec / 60);
+        document.getElementById("hours").innerHTML = parseInt(min / 60);
+    }, 1000);
+
+    //Discovers a draw
+    function draw() {
+        boardfull = cells.filter(function (cell) {
+            return cell.innerHTML !== ""
+        })
+        if (boardfull.length === 9 && !winner) {
+            message.innerHTML = "draw"
+            clearBoard()
+        }
     }
 }

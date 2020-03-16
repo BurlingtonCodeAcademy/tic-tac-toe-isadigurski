@@ -8,11 +8,24 @@
   <title>Tic Tac Toe</title>
   <link type="text/css" rel="stylesheet" href="style.css">
 </head>
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
 
 <body>
   <h1 class="border"></h1>
-  <h2 class="border">Tic Tac Toe</h2>
-  <h1 id="status" class="border">Welcome</h1>
+  <h2 class="border" id="ttt">Tic Tac Toe</h2>
+  <br>
+  <div id="timewrapper">
+    <div class="timer">
+      <h1 id="timer">Timer</h1>
+      <span id="hours">00</span>
+      <span id="semi">:</span>
+      <span id="minutes">00</span>
+      <span id="semi">:</span>
+      <span id="seconds">00</span>
+      <h1 id="status" class="border"></h1>
+    </div>
+  </div>
+  
   </section>
   <div class="board">
     <div id="row-1">
@@ -32,15 +45,16 @@
     </div>
   </div>
   <h1 class="border"></h1>
-  <div>
-    <button id="start1" type="button">1 Player</button>
-    <input name="item" id="player1name" type="text" placeholder="Player 1 Type Name"></input>
-    <button id="start2" type="button">2 Player</button>
-    <input name="item" id="player2name" type="text" placeholder="Player 2 Type Name"></input>
-    <br>
-    <br>
-    <button id="resetbutton" type="button">RESET</button>
-    <button id="startcomp" type="button">Play Computer</button>
+  <div id="informationWrapper">
+    <div class="information">
+      <button class="button" id="start1" type="button">1 Player</button>
+      <input name="item" id="player1name" type="text" placeholder="Player 1 Type Name"></input>
+      <button class="button" id="start2" type="button">2 Player</button>
+      <input name="item" id="player2name" type="text" placeholder="Player 2 Type Name"></input>
+      <br>
+      <br>
+      <button class="button" id="resetbutton" type="button">RESET</button>
+    </div>
   </div>
   <script src="./jsscr/main.js"></script>
 </body>
