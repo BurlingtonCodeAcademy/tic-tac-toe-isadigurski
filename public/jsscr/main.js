@@ -24,32 +24,19 @@ let winningconditons = [
     [c2, c4, c6]
 ]
 //Players and Status
-let playerX = '<img src="./jsscr/X.png" height="120" width="120" id="x">'
-let playerO = '<img src="./jsscr/O.png" height="130" width="130" id="o">'
+let playerX = '<img src="./jsscr/PlayerImage/X.png" height="120" width="120" id="x">'
+let playerO = '<img src="./jsscr/PlayerImage/O.png" height="130" width="130" id="o">'
 currentPlayer = playerX
 let message = document.getElementById('status')
 //Adds name to status section for Player 1
 let item = document.getElementById('player1name')
 let addButton = document.getElementById('start1')
 let itemList = document.getElementById('status')
+let turns = 0;
+let computerPlayer = false;
 //-------------------------------------------------------------
-//Start Game 1 Player
-let startButton = document.getElementById("start1")
-startButton.addEventListener('click', () => {
-    activateSquare()
-    AI()
-    startTimer()
-})
+//Start Game - Human vs. Human
 
-function activateSquare() {
-    cells.forEach(cell => {
-        cell.addEventListener('click', AI)
-    })
-    message.innerHTML = 'Current Player X'
-}
-
-
-//Start Game 2 Player
 let startButton2 = document.getElementById("start2")
 startButton2.addEventListener('click', () => {
     activateSquare2()
@@ -63,48 +50,8 @@ function activateSquare2() {
     message.innerHTML = 'Current Player X'
 }
 
-//Human vs Computer
-
-function AI() {
-
-    //Guess a random square
-    function randomInt(min, max) {
-        let range = max - min + 1
-        return min + Math.floor(Math.random() * range)
-    }
-
-    //wrap in an if statement, if turn equal computer, under if is another else 'players turn'
-    if (currentPlayer === playerO) {
-
-        let aiSquare = randomInt(0, 8)
-        console.log(aiSquare)
-        console.log(cells[aiSquare])
-
-        if (cells[aiSquare].innerHTML === "") {
-            cells[aiSquare].innerHTML = playerO
-            status.textContent = "Human's Turn"
-            let isWinner = winningLine()
-
-            if (isWinner) {
-                status.textContent = "Computer Wins"
-            }
-        } else {
-            AI()
-        }
-    } else {
-        if (event.target.innerHTML) {
-            message.innerHTML = 'SQUARE IS OCCUPIED'
-        } else {
-            event.target.innerHTML = currentPlayer
-            currentPlayer = playerO
-            message.innerHTML = 'Current Player O'
-            winningLine()
-        }
-        AI()
-    }
-}
-
 //Switches between X and O and draws the player symbol, and blocks square in 2 Player mode
+
 function twoplayer(event) {
 
     if (event.target.innerHTML) {
@@ -123,7 +70,87 @@ function twoplayer(event) {
         }
     }
 }
+
+//.........................................................................................................
+
+//Start Game - Human vs. AI
+
+let startButton = document.getElementById("start1")
+startButton.addEventListener('click', () => {
+    activateSquare()
+    computerPlayer = true;
+    startTimer()
+})
+
+function activateSquare() {
+    cells.forEach(cell => {
+        cell.addEventListener('click', AI)
+    })
+    message.innerHTML = 'Current Player X'
+}
+
+//Guess a random square
+
+function randomInt(min, max) {
+    let range = max - min + 1
+    return min + Math.floor(Math.random() * range)
+}
+
+//Starts Human vs. AI game
+
+function AI() {
+
+    if (currentPlayer === playerO) {
+        //Picks random cell
+        let aiSquare = randomInt(0, 8);
+        console.log(aiSquare)
+        console.log(cells[aiSquare])
+
+        //If cell is empty it will place an "O" in it
+        if (cells[aiSquare].innerHTML === "") {
+            cells[aiSquare].innerHTML = playerO
+            turns++;    //Increment turns
+            currentPlayer = playerX;    //Switch player
+            message.innerHTML = 'Current Player X'  //Switch message
+            winner = winningLine()    //Checks if there is a winner
+
+            //If winner, computer wins
+            if (winner) {
+                status.textContent = "Computer Wins"
+                deactivateSquaresAI();
+            }
+        //If cell is not empty, recursively call AI function
+        } else {
+            AI()
+        }
+    //Human (X) turn
+    } else {
+        //If clicked square is full
+        if (event.target.innerHTML) {
+            console.log(event.target.innerHTML)
+            message.innerHTML = 'SQUARE IS OCCUPIED'
+        //Square is empty
+        } else {
+            //Set innerHTML to currentPlayer (X)
+            event.target.innerHTML = currentPlayer
+            turns++;    //Increment turns
+            currentPlayer = playerO     //Switch current player to O
+            message.innerHTML = 'Current Player O'  //Switch message
+            winner = winningLine()  //Check if there is a winner
+            //No winner, computer's turn
+            if(!winner && turns < 9) {
+                AI()
+                //If winner, human wins
+            } else {
+                status.textContent = 'Human Wins'
+                deactivateSquaresAI();
+            }
+        }
+    }
+}
+
 //Discovers a winning combination in 2 Player mode
+
 function winningLine() {
     for (let winningArrays of winningconditons) {
         let firstCell = winningArrays[0].innerHTML;
@@ -136,6 +163,7 @@ function winningLine() {
                 winningArrays[0].style.backgroundColor = "blue"
                 winningArrays[1].style.backgroundColor = "blue"
                 winningArrays[2].style.backgroundColor = "blue"
+                clearInterval(timer);
                 deactivateSquares()
                 clearBoard()
                 break;
@@ -145,20 +173,28 @@ function winningLine() {
     draw()
 }
 //Clears board game and reset board after 3 seconds
+
 function clearBoard() {
     window.setTimeout(reloadDocument, 3000);
 }
 
 function reloadDocument() {
     document.location.reload();
-    clearInterval(interval);
 }
 
 //Stops player from clicking on squares after winner is announced
+
 function deactivateSquares() {
-    c0.removeEventListener('click', event), c1.removeEventListener('click', event), c2.removeEventListener('click', event), c3.removeEventListener('click', event), c4.removeEventListener('click', event), c5.removeEventListener('click', event), c6.removeEventListener('click', event), c7.removeEventListener('click', event), c8.removeEventListener('click', event)
+    cells.forEach(cell => {
+        cell.removeEventListener('click', twoplayer)
+    })
 }
 
+function deactivateSquaresAI() {
+    cells.forEach(cell => {
+        cell.removeEventListener('click', AI);
+    })
+}
 //Add players names when selecting 2 player or 1 player (x)
 
 addButton.addEventListener('click', function () {
@@ -184,12 +220,16 @@ function startTimer() {
     }, 1000);
 }
 //Discovers a draw
+
 function draw() {
     boardfull = cells.filter(function (cell) {
         return cell.innerHTML !== ""
     })
     if (boardfull.length === 9 && !winner) {
         message.innerHTML = "draw"
+        clearInterval(timer);
         clearBoard()
+        if(computerPlayer) deactivateSquaresAI();
+        if(!computerPlayer) deactivateSquares();
     }
 }
