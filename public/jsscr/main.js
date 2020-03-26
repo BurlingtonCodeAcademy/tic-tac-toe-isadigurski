@@ -137,12 +137,16 @@ function twoplayer(event) {
         if (currentPlayer === playerX) {
             currentPlayer = playerO
             message.innerHTML = 'Current Player O'
-            winningLine()
+            winner = winningLine()
         } else {
             currentPlayer = playerX
             item.innerHTML = 'Current Player X'
-            winningLine()
+            winner = winningLine()
         }
+    }
+    if(winner) {
+        console.log('winner winner')
+        deactivateSquares();
     }
 }
 //Discovers a winning combination in 2 Player mode
@@ -161,11 +165,12 @@ function winningLine() {
                 clearInterval(timer);
                 deactivateSquares()
                 clearBoard()
-                break;
+                return true;
             }
         }
     }
     draw()
+    return false;
 }
 //Clears board game and reset board after 3 seconds
 function clearBoard() {
@@ -179,7 +184,9 @@ function reloadDocument() {
 
 //Stops player from clicking on squares after winner is announced
 function deactivateSquares() {
-    c0.removeEventListener('click', event), c1.removeEventListener('click', event), c2.removeEventListener('click', event), c3.removeEventListener('click', event), c4.removeEventListener('click', event), c5.removeEventListener('click', event), c6.removeEventListener('click', event), c7.removeEventListener('click', event), c8.removeEventListener('click', event)
+    cells.forEach(cell => {
+        cell.removeEventListener('click', twoplayer);
+    })
 }
 
 function deactivateSquaresAI() {
