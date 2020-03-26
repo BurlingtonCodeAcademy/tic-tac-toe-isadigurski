@@ -1,10 +1,8 @@
 body {
-  height: 100vh;
-  width: 100vw;
   background-color: #153820;
-  background-image: url("./jsscr/BackgroundImage/StarWarsLightSpeed.jpg");
-  background-attachment: fixed;
-  background-size: cover;
+background-image: url(./jsscr/backgroundImage.png);
+background-attachment: fixed;
+background-size: cover;
   }
   
   #timer {
@@ -23,16 +21,13 @@ body {
   display: flex;
   justify-content: center;
   padding: 20px;
-  border: solid white;
-  margin: auto;
 }
 
   .timer {
   text-align: center;
-  
-  width: 70vw;
+  border: solid white;
+  width: 30vw;
   color: white;
-  font-size: 50px;
   }
 
 #semi {
@@ -57,9 +52,10 @@ body {
   }
 
 .board {
+  background-color: black;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg fill-opacity='0.6'%3E%3Cpolygon fill='%23214a2e' points='800 100 0 200 0 800 1600 800 1600 200'/%3E%3Cpolygon fill='%232e5b3c' points='800 200 0 400 0 800 1600 800 1600 400'/%3E%3Cpolygon fill='%233e694b' points='800 300 0 600 0 800 1600 800 1600 600'/%3E%3Cpolygon fill='%234f755b' points='1600 800 800 400 0 800'/%3E%3Cpolygon fill='%2362806c' points='1280 800 800 500 320 800'/%3E%3Cpolygon fill='%2378887d' points='533.3 800 1066.7 800 800 600'/%3E%3Cpolygon fill='%238f8f8f' points='684.1 800 914.3 800 800 700'/%3E%3C/g%3E%3C/svg%3E");
   border-radius: 25px;
   cursor: pointer;
-
 }
 
 #informationWrapper {
@@ -69,7 +65,7 @@ body {
 
 .information {
   text-align: center;
-  border: solid white;
+  border: solid black;
   padding: 20px;
   width: 60vw;
 }
@@ -117,7 +113,7 @@ body {
   div[id^="row-"] div {
     width: 200px;
     height: 200px;
-    border: 1px solid white;
+    border: 1px solid red;
     float: left;
   
   }
