@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tic Tac Toe</title>
+  <link type="text/css" rel="stylesheet" href="style.css">
+</head>
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+
+<body>
+  <h1 class="border"></h1>
+  <h2 class="border" id="ttt">Tic Tac Toe</h2>
+  <br>
+  <div id="timewrapper">
+    <div class="timer">
+      <h1 id="timer">Timer</h1>
+      <span id="minutes">00</span>
+      <span id="semi">:</span>
+      <span id="seconds">00</span>
+      <h1 id="status" class="border"></h1>
+    </div>
+  </div>
+  
+  </section>
+  <div class="board">
+    <div id="row-1">
+      <div class="cell" id="cell-0"></div>
+      <div class="cell" id="cell-1"></div>
+      <div class="cell" id="cell-2"></div>
+    </div>
+    <div id="row-2">
+      <div class="cell" id="cell-3"></div>
+      <div class="cell" id="cell-4"></div>
+      <div class="cell" id="cell-5"></div>
+    </div>
+    <div id="row-3">
+      <div class="cell" id="cell-6"></div>
+      <div class="cell" id="cell-7"></div>
+      <div class="cell" id="cell-8"></div>
+    </div>
+  </div>
+  <h1 class="border"></h1>
+  <div id="informationWrapper">
+    <div class="information">
+      <button class="button" id="start1" type="button">1 Player</button>
+      <input name="item" id="player1name" type="text" placeholder="Player 1 Type Name"></input>
+      <button class="button" id="start2" type="button">2 Player</button>
+      <input name="item" id="player2name" type="text" placeholder="Player 2 Type Name"></input>
+      <br>
+      <br>
+      <button onClick="startGame" class="button" id="resetbutton" type="button">Replay</button>
+    </div>
+  </div>
+  <script src="./jsscr/main.js"></script>
+</body>
+
+</html>
